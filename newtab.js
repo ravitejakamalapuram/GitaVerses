@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const elDrawerBackdrop = document.getElementById('drawer-backdrop');
   
   // Settings Inputs
-  const elRadioLangs = document.querySelectorAll('input[name="lang-pref"]');
+  const elSelectLangPref = document.getElementById('select-lang-pref');
   const elThemeBtns = document.querySelectorAll('.theme-btn');
   const elCheckTransliteration = document.getElementById('toggle-transliteration');
   const elCheckExpandMeanings = document.getElementById('toggle-expand-meanings');
@@ -134,6 +134,131 @@ document.addEventListener('DOMContentLoaded', () => {
       Object.entries(data).forEach(([key, val]) => {
         localStorage.setItem(`gita_wisdom_${key}`, JSON.stringify(val));
       });
+    }
+  }
+
+  // --- Voice and Translation Helpers ---
+
+  function findBestIndianFemaleVoice(langCode) {
+    const voices = window.speechSynthesis.getVoices();
+    
+    // Normalize langCode (e.g. "hi" -> "hi-in", "ta" -> "ta-in")
+    let targetLang = langCode.toLowerCase();
+    if (targetLang === 'en') {
+      targetLang = 'en-in'; // Prioritize Indian English!
+    } else if (!targetLang.includes('-')) {
+      targetLang = `${targetLang}-in`;
+    }
+    
+    // 1. Filter voices matching target language
+    const langVoices = voices.filter(v => 
+      v.lang.toLowerCase() === targetLang || 
+      v.lang.toLowerCase().startsWith(targetLang.substring(0, 2))
+    );
+    
+    if (langVoices.length === 0) {
+      // Fallback: if we want a specific Indian language but it is missing,
+      // and it's not English, fall back to Hindi (hi-in) as it is the native Indian voice
+      if (targetLang.substring(0, 2) !== 'en') {
+        return findBestIndianFemaleVoice('hi');
+      }
+      return null;
+    }
+    
+    // 2. Look for female indicator in the name
+    const femaleIndicators = [
+      'female', 'woman', 'girl', 'lekha', 'kalpana', 'heera', 'swara', 
+      'neerja', 'nirmala', 'kavita', 'shruti', 'veena', 'sangeeta', 
+      'pallavi', 'vaishali', 'ananya', 'geeta', 'lata', 'asha'
+    ];
+    
+    const femaleVoices = langVoices.filter(v => {
+      const nameLower = v.name.toLowerCase();
+      return femaleIndicators.some(indicator => nameLower.includes(indicator));
+    });
+    
+    if (femaleVoices.length > 0) {
+      return femaleVoices[0]; // Best match: target language + female voice
+    }
+    
+    // 3. Fall back to any voice in that language
+    return langVoices[0];
+  }
+
+  async function fetchGoogleTranslate(text, sourceLang, targetLang) {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Fetch failed');
+    const data = await res.json();
+    
+    let translated = '';
+    if (data && data[0]) {
+      data[0].forEach(sentence => {
+        if (sentence[0]) translated += sentence[0];
+      });
+    }
+    return translated || text;
+  }
+
+  async function getTranslation(verseObj, targetLang) {
+    if (targetLang === 'en') {
+      return {
+        translation: verseObj.translation.en,
+        commentary: verseObj.commentary.en
+      };
+    }
+    if (targetLang === 'hi') {
+      return {
+        translation: verseObj.translation.hi,
+        commentary: verseObj.commentary.hi
+      };
+    }
+    
+    const cacheKey = `trans_${verseObj.chapter}_${verseObj.verse}_${targetLang}`;
+    const cached = await getStorageData(cacheKey);
+    if (cached && cached[cacheKey]) {
+      return cached[cacheKey];
+    }
+    
+    // Try Chrome Built-in Translator API if supported
+    if ('Translator' in self) {
+      try {
+        const options = { sourceLanguage: 'hi', targetLanguage: targetLang };
+        const availability = await Translator.availability(options);
+        if (availability === 'available') {
+          const translator = await Translator.create(options);
+          const translatedText = await translator.translate(verseObj.translation.hi);
+          const translatedComm = await translator.translate(verseObj.commentary.hi);
+          
+          const result = {
+            translation: translatedText,
+            commentary: translatedComm
+          };
+          await setStorageData({ [cacheKey]: result });
+          return result;
+        }
+      } catch (err) {
+        console.warn('Chrome Translator API failed, falling back to public API:', err);
+      }
+    }
+    
+    // Fallback: Free Google Translate API
+    try {
+      const translatedText = await fetchGoogleTranslate(verseObj.translation.hi, 'hi', targetLang);
+      const translatedComm = await fetchGoogleTranslate(verseObj.commentary.hi, 'hi', targetLang);
+      
+      const result = {
+        translation: translatedText,
+        commentary: translatedComm
+      };
+      await setStorageData({ [cacheKey]: result });
+      return result;
+    } catch (err) {
+      console.error('Translation fallback failed:', err);
+      return {
+        translation: verseObj.translation.en,
+        commentary: verseObj.commentary.en
+      };
     }
   }
 
@@ -246,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
   elDrawerBackdrop.addEventListener('click', closeDrawer);
 
   // --- Shloka Loading & Rendering ---
-  function renderShloka(verseObj) {
+  async function renderShloka(verseObj) {
     if (!verseObj) return;
     currentVerse = verseObj;
 
@@ -264,11 +389,16 @@ document.addEventListener('DOMContentLoaded', () => {
     elSanskrit.textContent = verseObj.sanskrit;
     elTransliteration.textContent = verseObj.transliteration;
     
-    // Check preferred language for translation & explanation
-    if (settings.lang === 'hi') {
-      elTranslation.textContent = verseObj.translation.hi;
-      elCommentaryText.textContent = verseObj.commentary.hi;
-    } else {
+    // Check preferred language for translation & explanation (async translation fetch)
+    elTranslation.textContent = "Translating...";
+    elCommentaryText.textContent = "Translating explanation...";
+    
+    try {
+      const transResult = await getTranslation(verseObj, settings.lang);
+      elTranslation.textContent = transResult.translation;
+      elCommentaryText.textContent = transResult.commentary;
+    } catch (err) {
+      console.error('Translation rendering failed:', err);
       elTranslation.textContent = verseObj.translation.en;
       elCommentaryText.textContent = verseObj.commentary.en;
     }
@@ -416,21 +546,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sanskrit Shloka Block
     if (settings.voiceType === 'sanskrit-only' || settings.voiceType === 'both') {
-      // Remove newline characters and clean up string for optimal speech engine pacing
       const cleanSanskrit = currentVerse.sanskrit.replace(/\n/g, ' ').replace(/[।॥]/g, ',');
       speechBlocks.push({
         text: cleanSanskrit,
         lang: 'hi-IN', // Sanskrit/Hindi voice handles Devanagari correctly
-        rate: speed * 0.85 // Sanskrit reads slightly slower for pronunciation clarity
+        rate: speed * 0.85
       });
     }
 
     // Translation Block
     if (settings.voiceType === 'translation-only' || settings.voiceType === 'both') {
-      const translation = settings.lang === 'hi' ? currentVerse.translation.hi : currentVerse.translation.en;
+      const translation = elTranslation.textContent;
       speechBlocks.push({
         text: translation,
-        lang: settings.lang === 'hi' ? 'hi-IN' : 'en-US',
+        lang: settings.lang === 'en' ? 'en-IN' : settings.lang,
         rate: speed
       });
     }
@@ -458,24 +587,10 @@ document.addEventListener('DOMContentLoaded', () => {
       speechUtterance.volume = 1.0;
       speechUtterance.pitch = 1.0;
 
-      // Voice Selection Logic
-      const voices = window.speechSynthesis.getVoices();
-      let matchedVoice = null;
-
-      if (block.lang === 'hi-IN') {
-        // Look for Hindi/Indian voice
-        matchedVoice = voices.find(v => v.lang === 'hi-IN' || v.lang.startsWith('hi') || v.name.includes('Hindi') || v.name.includes('India'));
-      } else {
-        // Look for English voice
-        matchedVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Microsoft')));
-      }
-
+      // Find the best Indian female voice for this block's language code
+      const matchedVoice = findBestIndianFemaleVoice(block.lang);
       if (matchedVoice) {
         speechUtterance.voice = matchedVoice;
-      } else if (voices.length > 0) {
-        // Fallback to first available matching language voice
-        const langVoice = voices.find(v => v.lang.startsWith(block.lang.substring(0, 2)));
-        if (langVoice) speechUtterance.voice = langVoice;
       }
 
       speechUtterance.onend = () => {
@@ -734,10 +849,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Reflect settings in DOM controls
     
-    // Language radio buttons
-    elRadioLangs.forEach(radio => {
-      radio.checked = radio.value === settings.lang;
-    });
+    // Language select dropdown
+    elSelectLangPref.value = settings.lang;
 
     // Checkbox toggles
     elCheckTransliteration.checked = settings.showTransliteration;
@@ -764,16 +877,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Add Event Listeners for settings changes ---
   
   // Language Change
-  elRadioLangs.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      settings.lang = e.target.value;
-      setStorageData({ lang: settings.lang });
-      
-      // Re-render current shloka in new language
-      if (currentVerse) {
-        renderShloka(currentVerse);
-      }
-    });
+  elSelectLangPref.addEventListener('change', (e) => {
+    settings.lang = e.target.value;
+    setStorageData({ lang: settings.lang });
+    
+    // Re-render current shloka in new language
+    if (currentVerse) {
+      renderShloka(currentVerse);
+    }
   });
 
   // Theme Change

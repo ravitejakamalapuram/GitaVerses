@@ -185,17 +185,21 @@
       <section id="tab-settings" class="tab-panel active">
         <div class="settings-group">
           <h3>Preferred Translation Language</h3>
-          <div class="radio-group">
-            <label class="radio-label">
-              <input type="radio" name="lang-pref" value="en" checked>
-              <span class="custom-radio"></span>
-              English
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="lang-pref" value="hi">
-              <span class="custom-radio"></span>
-              हिन्दी (Hindi)
-            </label>
+          <div class="setting-row">
+            <select id="select-lang-pref" class="custom-select" style="width: 100%;">
+              <option value="en" selected>English</option>
+              <option value="hi">हिन्दी (Hindi) - North/Central</option>
+              <option value="bn">বাংলা (Bengali) - West Bengal, Tripura</option>
+              <option value="mr">मराठी (Marathi) - Maharashtra</option>
+              <option value="te">తెలుగు (Telugu) - Andhra, Telangana</option>
+              <option value="ta">தமிழ் (Tamil) - Tamil Nadu</option>
+              <option value="kn">ಕನ್ನಡ (Kannada) - Karnataka</option>
+              <option value="gu">ગુજરાતી (Gujarati) - Gujarat</option>
+              <option value="ml">മലയാളം (Malayalam) - Kerala</option>
+              <option value="pa">ਪੰਜਾਬੀ (Punjabi) - Punjab</option>
+              <option value="or">ଓଡ଼ିଆ (Odia) - Odisha</option>
+              <option value="as">অসমীয়া (Assamese) - Assam</option>
+            </select>
           </div>
         </div>
 
