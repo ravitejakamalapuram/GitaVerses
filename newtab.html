@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gita Wisdom - Daily Shloka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Beautiful typography: Outfit (Modern UI), Playfair Display (Serif translation), Noto Serif Devanagari (Sanskrit) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body>
+
+  <!-- Background Image & Animated Overlay -->
+  <div class="bg-container">
+    <div id="bg-image" class="bg-image"></div>
+    <div class="bg-overlay"></div>
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="app-layout">
+    
+    <!-- Top Bar: Clock, Date, Greetings & Settings Button -->
+    <header class="top-bar">
+      <div class="info-widget">
+        <h1 id="time-display" class="time-display">00:00</h1>
+        <div class="date-greeting">
+          <span id="date-display" class="date-display">Date Loading...</span>
+          <span class="separator">•</span>
+          <span id="greeting-display" class="greeting-display">Hari Om</span>
+        </div>
+      </div>
+      
+      <button id="btn-toggle-drawer" class="btn-icon btn-settings" title="Settings & Index">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Content Panel: Central Shloka Card -->
+    <main class="main-content">
+      <div class="verse-card animate-fade-in" id="verse-card">
+        
+        <!-- Verse Header: Chapter & Theme -->
+        <div class="card-header">
+          <span id="verse-coords" class="verse-coords">Chapter 0, Verse 0</span>
+          <span class="theme-tag" id="verse-theme">Wisdom</span>
+        </div>
+
+        <!-- Verse Content -->
+        <div class="card-body">
+          <!-- Sanskrit Text -->
+          <div id="sanskrit-display" class="sanskrit-text select-all">
+            Loading shloka...
+          </div>
+          
+          <!-- Transliteration (Togglable) -->
+          <div id="transliteration-display" class="transliteration-text select-all">
+            Loading transliteration...
+          </div>
+
+          <div class="card-divider">
+            <span class="divider-gem">✦</span>
+          </div>
+
+          <!-- Translation (Pref Language) -->
+          <div id="translation-display" class="translation-text select-all">
+            Loading translation...
+          </div>
+
+          <!-- Collapsible Commentary Button -->
+          <button id="btn-toggle-commentary" class="btn-text-link">
+            <span>View Word Meanings & Explanation</span>
+            <svg class="chevron-icon" id="commentary-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- Collapsible Commentary Section -->
+          <div id="commentary-panel" class="commentary-panel collapsed">
+            <div class="commentary-scroll-area">
+              <div class="word-meanings-section">
+                <h3>Word Meanings</h3>
+                <p id="word-meanings-display" class="word-meanings-text">Loading word meanings...</p>
+              </div>
+              <div class="explanation-section">
+                <h3>Explanation</h3>
+                <p id="commentary-display" class="explanation-text">Loading explanation...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Controls Bar -->
+        <div class="card-footer">
+          <div class="footer-left">
+            <!-- Audio recitation button -->
+            <button id="btn-play-audio" class="btn-round btn-play" title="Listen (Text to Speech)">
+              <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="icon-visible">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <svg id="stop-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="icon-hidden">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+              </svg>
+              <!-- Small wave bars for playing status -->
+              <div id="audio-wave" class="audio-wave-container hidden">
+                <span class="wave-bar bar-1"></span>
+                <span class="wave-bar bar-2"></span>
+                <span class="wave-bar bar-3"></span>
+                <span class="wave-bar bar-4"></span>
+              </div>
+            </button>
+            <span class="audio-status" id="audio-status-text">Listen</span>
+          </div>
+
+          <div class="footer-right">
+            <!-- Save/Bookmark button -->
+            <button id="btn-bookmark" class="btn-action-round" title="Add to Bookmarks">
+              <svg id="bookmark-icon-empty" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-visible">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <svg id="bookmark-icon-filled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="icon-hidden bookmark-filled">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+
+            <!-- Copy button -->
+            <button id="btn-copy" class="btn-action-round" title="Copy Verse & Translation">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+
+            <!-- Next Shloka (Shuffle) -->
+            <button id="btn-next-verse" class="btn-action-round highlight-btn" title="Next Wisdom (Shuffle)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer Quote -->
+    <footer class="app-footer">
+      <p id="footer-daily-quote">“Fix your mind on Me, be devoted to Me...”</p>
+    </footer>
+
+  </div>
+
+  <!-- Backdrop for Drawer -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+  <!-- Slide-out Drawer Panel -->
+  <aside id="app-drawer" class="app-drawer">
+    <div class="drawer-header">
+      <div class="drawer-tabs">
+        <button class="tab-btn active" data-tab="settings">Settings</button>
+        <button class="tab-btn" data-tab="index">All Verses</button>
+        <button class="tab-btn" data-tab="bookmarks">Bookmarks</button>
+        <button class="tab-btn" data-tab="mindfulness">Mindful</button>
+      </div>
+      <button id="btn-close-drawer" class="btn-icon" title="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="drawer-content">
+      
+      <!-- TAB 1: Settings -->
+      <section id="tab-settings" class="tab-panel active">
+        <div class="settings-group">
+          <h3>Preferred Translation Language</h3>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="lang-pref" value="en" checked>
+              <span class="custom-radio"></span>
+              English
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="lang-pref" value="hi">
+              <span class="custom-radio"></span>
+              हिन्दी (Hindi)
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Theme Background</h3>
+          <div class="theme-grid">
+            <button class="theme-btn active" data-theme="sunrise" style="background: linear-gradient(135deg, #f5a623, #f8e71c);">
+              <span class="theme-label">Serene Sunrise</span>
+            </button>
+            <button class="theme-btn" data-theme="peacock" style="background: linear-gradient(135deg, #005a70, #00b4d8);">
+              <span class="theme-label">Divine Flute</span>
+            </button>
+            <button class="theme-btn" data-theme="forest" style="background: linear-gradient(135deg, #1b4d3e, #4f7942);">
+              <span class="theme-label">Mystic Forest</span>
+            </button>
+            <button class="theme-btn" data-theme="minimal" style="background: linear-gradient(135deg, #120e2e, #432371);">
+              <span class="theme-label">Cosmic Gold</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Display Settings</h3>
+          <label class="switch-label">
+            <span class="switch-text">Show Transliteration</span>
+            <input type="checkbox" id="toggle-transliteration" checked>
+            <span class="custom-switch"></span>
+          </label>
+          <label class="switch-label">
+            <span class="switch-text">Default Expand Meaning</span>
+            <input type="checkbox" id="toggle-expand-meanings">
+            <span class="custom-switch"></span>
+          </label>
+        </div>
+
+        <div class="settings-group">
+          <h3>Audio Recitation Voice Settings</h3>
+          <div class="setting-row">
+            <label for="select-voice-speed">Speech Rate:</label>
+            <select id="select-voice-speed" class="custom-select">
+              <option value="0.75">Slower (0.75x)</option>
+              <option value="0.9">Medium-Slow (0.9x)</option>
+              <option value="1.0" selected>Normal (1.0x)</option>
+              <option value="1.15">Medium-Fast (1.15x)</option>
+              <option value="1.25">Faster (1.25x)</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label for="select-voice-type">Voice Focus:</label>
+            <select id="select-voice-type" class="custom-select">
+              <option value="sanskrit-only" selected>Sanskrit Only</option>
+              <option value="translation-only">Translation Only</option>
+              <option value="both">Sanskrit + Translation</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: All Verses Index -->
+      <section id="tab-index" class="tab-panel">
+        <div class="search-box-container">
+          <input type="text" id="search-input" placeholder="Search by keyword or theme..." class="search-input">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <div class="index-scroll-list" id="index-list-container">
+          <!-- Dynamic List of Verses -->
+        </div>
+      </section>
+
+      <!-- TAB 3: Bookmarks -->
+      <section id="tab-bookmarks" class="tab-panel">
+        <div class="bookmarks-scroll-list" id="bookmarks-list-container">
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <p>No saved verses yet.<br>Click the heart icon on any verse to save it here.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Mindfulness Progress -->
+      <section id="tab-mindfulness" class="tab-panel">
+        <div class="mindfulness-container">
+          <div class="stat-card">
+            <span class="stat-number" id="stat-total-read">0</span>
+            <span class="stat-label">Total Verses Read</span>
+          </div>
+          
+          <div class="stat-card">
+            <span class="stat-number" id="stat-streak">0</span>
+            <span class="stat-label">Daily Streak (Days)</span>
+          </div>
+
+          <div class="goal-tracker-card">
+            <h3>Daily Mindful Goal</h3>
+            <div class="goal-progress-bar">
+              <div class="progress-fill" id="goal-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="goal-stats">
+              <span id="goal-text">0 / 3 Verses read today</span>
+              <span id="goal-percentage">0%</span>
+            </div>
+            <p class="goal-tip">Tip: Try spending 2 minutes in silence reflecting on each verse you open.</p>
+          </div>
+
+          <div class="stat-card streak-history-card">
+            <h3>Streaks & Habit</h3>
+            <p id="streak-motivation">Start your mindful journey today! Reviewing a shloka daily aligns your mind and focus.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </aside>
+
+  <!-- Toast Notification Center -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Inject the local database and core extension scripts -->
+  <script src="verses.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>
