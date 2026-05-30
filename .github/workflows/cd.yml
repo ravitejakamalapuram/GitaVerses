@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   release:
-    uses: ravitejakamalapuram/.github-workflows-shared/.github/workflows/chrome-extension-cd.yml@v1.1.2
+    uses: ravitejakamalapuram/.github-workflows-shared/.github/workflows/chrome-extension-cd.yml@v1.1.3
     with:
       extension-dir: '.'
     secrets:
