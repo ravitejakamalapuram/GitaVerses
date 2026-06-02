@@ -4,13 +4,13 @@
 
 ## Store Listing
 
-**Extension Name** [REQUIRED]
+**Extension Name**
 Gita Wisdom New Tab
 
-**Short Description** [REQUIRED]
+**Short Description**
 Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featurin
 
-**Detailed Description** [REQUIRED]
+**Detailed Description**
 Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.
    
 Structure recommendation:
@@ -19,23 +19,23 @@ Structure recommendation:
 3. How to use it step-by-step.
 4. Privacy/permissions notice (builds trust).
 
-**Category** [REQUIRED]
+**Category**
 Productivity
 
-**Single Purpose** [REQUIRED]
+**Single Purpose**
 Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom
 
-**Primary Language** [REQUIRED]
+**Primary Language**
 English
 
 ## Graphics & Assets
 
 | Asset | Dimensions | Status | Filename |
 |---|---|---|---|
-| Store Icon [REQUIRED] | 128×128 PNG | ✅ Ready | icons/icon-128.png |
-| Screenshot 1 [REQUIRED] | 1280×800 or 640×400 | ⬜ Not created | |
-| Screenshot 2 [RECOMMENDED] | 1280×800 or 640×400 | ⬜ Not created | |
-| Small Promo Tile [RECOMMENDED] | 440×280 | ⬜ Not created | |
+| Store Icon | 128×128 PNG | ✅ Ready | icons/icon-128.png |
+| Screenshot 1 | 1280×800 or 640×400 | ⬜ Not created | |
+| Screenshot 2 | 1280×800 or 640×400 | ⬜ Not created | |
+| Small Promo Tile | 440×280 | ⬜ Not created | |
 
 ## Permissions Justification
 
