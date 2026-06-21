@@ -33,9 +33,10 @@ English
 | Asset | Dimensions | Status | Filename |
 |---|---|---|---|
 | Store Icon | 128×128 PNG | ✅ Ready | icons/icon-128.png |
-| Screenshot 1 | 1280×800 or 640×400 | ⬜ Not created | |
-| Screenshot 2 | 1280×800 or 640×400 | ⬜ Not created | |
-| Small Promo Tile | 440×280 | ⬜ Not created | |
+| Screenshot 1 | 1280×800 or 640×400 | ✅ Ready | screenshot-1.png |
+| Screenshot 2 | 1280×800 or 640×400 | ✅ Ready | screenshot-2.png |
+| Small Promo Tile | 440×280 | ✅ Ready | promo-tile-small.png |
+| Marquee Promo Tile | 1400×560 | ✅ Ready | promo-tile-marquee.png |
 
 ## Permissions Justification
 
