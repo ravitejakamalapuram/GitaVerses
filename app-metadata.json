@@ -25,7 +25,7 @@
         },
         "language": "en",
         "testInstructions": "",
-        "remoteCodeUsed": false,
+        "remoteCodeUsed": true,
         "remoteCodeJustification": "The extension does not use remote code. All files, scripts, and libraries are packaged locally within the extension ZIP file.",
         "dataUsageCertified": true
       }
