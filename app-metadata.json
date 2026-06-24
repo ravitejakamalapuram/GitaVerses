@@ -1,0 +1,34 @@
+{
+  "appName": "Gita Wisdom New Tab",
+  "appType": "chrome-extension",
+  "repoName": "GitaVerses",
+  "description": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.",
+  "modules": [
+    {
+      "name": "Chrome Extension",
+      "type": "chrome-extension",
+      "path": ".",
+      "status": "draft",
+      "storeId": "",
+      "storeUrl": "",
+      "developerConsoleUrl": "https://chrome.google.com/webstore/devconsole",
+      "buildScript": "zip -r initial-package.zip . -x '*.git*' -x '*.zip' -x '*.log' -x '.*'",
+      "artifactPath": "initial-package.zip",
+      "cwsListing": {
+        "shortDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featurin",
+        "detailedDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.",
+        "category": "workflow",
+        "singlePurpose": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom",
+        "privacyPolicyUrl": "https://ravitejakamalapuram.github.io/GitaVerses/privacy.html",
+        "permissionJustifications": {
+          "storage": "The 'storage' permission is required to save the user's custom preferences, selected themes, and cached Bhagavad Gita verses locally on their device, ensuring settings persist across sessions and function offline."
+        },
+        "language": "en",
+        "testInstructions": "",
+        "remoteCodeUsed": true,
+        "remoteCodeJustification": "The extension does not use remote code. All files, scripts, and libraries are packaged locally within the extension ZIP file.",
+        "dataUsageCertified": true
+      }
+    }
+  ]
+}
