@@ -1,68 +1,84 @@
-# Chrome Web Store Listing — Gita Wisdom New Tab
+# Chrome Web Store Listing & Publishing Record
 
-> Last Updated: 2026-05-30
+*Last Updated: 2026-09-21*
 
-## Store Listing
+---
 
-**Extension Name**
+## 1. Extension Information
+- **Name**: Gita Wisdom New Tab
+- **Extension ID**: `hebmlallhbgfnjjcnilphllknhfoddnk`
+- **Publisher ID**: `9637cb78-fa33-49dd-a4cb-91066ff182e3`
+- **Version**: `1.0.2`
+- **Manifest Version**: `MV3`
+- **Language**: `en`
+- **Category**: `Lifestyle`
+
+---
+
+## 2. Store Listing Copy
+
+### Short Description (max 132 characters)
+> Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with audio and meanings.
+
+### Detailed Description
+```markdown
 Gita Wisdom New Tab
 
-**Short Description**
-Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featurin
-
-**Detailed Description**
 Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.
-   
-Structure recommendation:
-1. One-sentence summary of what the extension does.
-2. Key features (separated by line breaks, no bullets).
-3. How to use it step-by-step.
-4. Privacy/permissions notice (builds trust).
 
-**Category**
-Productivity
+Key Features:
+- Daily Shloka: Inspiring Bhagavad Gita verse every time you open a new tab.
+- Multilingual: Shlokas in original Sanskrit with English and Hindi translations.
+- Audio Recitation: Clear and meditative audio playback for authentic pronunciation.
+- Local-first & Private: All preferences and audio cached locally without tracking.
 
-**Single Purpose**
-Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom
+How to use:
+1. Open a new tab in Chrome.
+2. Read the daily shloka or browse chapter verses.
+3. Listen to recitation or change themes from settings.
+```
 
-**Primary Language**
-English
+---
 
-## Graphics & Assets
+## 3. Permissions Justifications (Required for Review)
 
-| Asset | Dimensions | Status | Filename |
-|---|---|---|---|
-| Store Icon | 128×128 PNG | ✅ Ready | icons/icon-128.png |
-| Screenshot 1 | 1280×800 or 640×400 | ✅ Ready | screenshot-1.png |
-| Screenshot 2 | 1280×800 or 640×400 | ✅ Ready | screenshot-2.png |
-| Small Promo Tile | 440×280 | ✅ Ready | promo-tile-small.png |
-| Marquee Promo Tile | 1400×560 | ✅ Ready | promo-tile-marquee.png |
+Google review requires specific plain-English justification for each declared permission:
 
-## Permissions Justification
+| Permission | Used in Code? | Sample Evidence | Required? | Risk | Plain-English Review Justification |
+| :--- | :---: | :--- | :---: | :---: | :--- |
+| `storage` | Yes | newtab.js:104 | Yes | LOW | Required to locally persist user settings, configurations, and application state across sessions. |
 
-Every permission in manifest.json needs a justification. The review team reads these.
+---
 
-| Permission | Type | Justification |
-|---|---|---|
-| `storage` | permissions | Used to persist user settings and configuration preferences locally, ensuring they are preserved across service worker restarts. |
+## 4. Privacy & Data Use Disclosure
 
-## Privacy & Data Use
+- **Privacy Policy URL**: `https://ravitejakamalapuram.github.io/gita-wisdom.html`
 
-### Data Collection
-**Does the extension collect user data?** No
+---
 
-All extension preferences and inputs are stored locally on the device and never sent off-device.
+## 5. Store Assets Checklist
 
-### Data Use Certification
-- [x] Data is NOT sold to third parties
-- [x] Data is NOT used for purposes unrelated to the extension's core functionality
-- [x] Data is NOT used for creditworthiness or lending purposes
+- [x] Extension Icon (128×128 PNG): `icons/icon-128.png`
+- [x] Primary Screenshot (1280×800 PNG): `store-assets/screenshot-1.png`
+- [x] Promotional Tile (440×280 PNG): `store-assets/promo-tile-small.png`
+- [x] Marquee Promo (1400×560 PNG): `store-assets/promo-tile-marquee.png`
 
-## Privacy Policy
-Privacy Policy available in `PRIVACY.md` in the project root. Recommended to host via GitHub Pages.
+---
 
-## Version History
+## 6. Pre-Publish Checklist
 
-| Version | Date | Changes | Status |
-|---|---|---|---|
-| 1.0.0 | 2026-05-30 | Initial onboarding draft. | Draft |
+- [x] Manifest V3 compliance verified
+- [x] No `eval()` or remotely hosted code
+- [x] No secrets, private keys, or API tokens in package
+- [x] Distributable archive contains `manifest.json` at root
+- [x] Branding guidelines & uncropped promo assets verified
+- [x] Live GitHub Pages privacy policy deployed
+
+---
+
+## 7. Release History
+
+| Version | Date | Status | Package ZIP | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| `1.0.1` | 2026-09-21 | Rejected | `gita-wisdom-new-tab-v1.0.1.zip` | Rejected under Branding Guidelines (cropped promo tile) |
+| `1.0.2` | 2026-09-22 | Draft / Ready | `chrome-store/builds/gita-wisdom-new-tab-v1.0.2.zip` | Added uncropped promo tiles with safe margins, updated privacy URL to GitHub Pages |
