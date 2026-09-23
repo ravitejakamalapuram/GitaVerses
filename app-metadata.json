@@ -2,31 +2,31 @@
   "appName": "Gita Wisdom New Tab",
   "appType": "chrome-extension",
   "repoName": "GitaVerses",
-  "description": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.",
+  "description": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring text-to-speech reading, word meanings, and customizable themes.",
   "modules": [
     {
       "name": "Chrome Extension",
       "type": "chrome-extension",
       "path": ".",
       "status": "draft",
-      "storeId": "",
-      "storeUrl": "",
-      "developerConsoleUrl": "https://chrome.google.com/webstore/devconsole",
+      "storeId": "hebmlallhbgfnjjcnilphllknhfoddnk",
+      "storeUrl": "https://chromewebstore.google.com/detail/hebmlallhbgfnjjcnilphllknhfoddnk",
+      "developerConsoleUrl": "https://chrome.google.com/webstore/devconsole/9637cb78-fa33-49dd-a4cb-91066ff182e3/hebmlallhbgfnjjcnilphllknhfoddnk",
       "buildScript": "zip -r initial-package.zip . -x '*.git*' -x '*.zip' -x '*.log' -x '.*'",
       "artifactPath": "initial-package.zip",
       "cwsListing": {
-        "shortDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featurin",
-        "detailedDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.",
-        "category": "workflow",
-        "singlePurpose": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom",
-        "privacyPolicyUrl": "https://ravitejakamalapuram.github.io/GitaVerses/privacy.html",
+        "shortDescription": "Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with text-to-speech and meanings.",
+        "detailedDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring text-to-speech reading, word meanings, and customizable themes.",
+        "category": "lifestyle",
+        "singlePurpose": "Replaces the new tab page with a dashboard that shows Bhagavad Gita shlokas with translations, commentary and text-to-speech reading.",
+        "privacyPolicyUrl": "https://ravitejakamalapuram.github.io/gita-wisdom.html",
         "permissionJustifications": {
-          "storage": "The 'storage' permission is required to save the user's custom preferences, selected themes, and cached Bhagavad Gita verses locally on their device, ensuring settings persist across sessions and function offline."
+          "storage": "Stores the user's theme, preferred language, text-to-speech voice settings, bookmarked verses, reading-streak stats and cached machine translations locally in chrome.storage.local so they persist across new tabs and sessions."
         },
         "language": "en",
         "testInstructions": "",
-        "remoteCodeUsed": true,
-        "remoteCodeJustification": "The extension does not use remote code. All files, scripts, and libraries are packaged locally within the extension ZIP file.",
+        "remoteCodeUsed": false,
+        "remoteCodeJustification": "The extension does not use remote code. All JavaScript is packaged in the extension; it only loads Google Fonts stylesheets and fetches JSON translation data from the Google Translate endpoint, neither of which is executed as code.",
         "dataUsageCertified": true
       }
     }
