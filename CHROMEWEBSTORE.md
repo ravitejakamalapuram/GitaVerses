@@ -18,24 +18,24 @@
 ## 2. Store Listing Copy
 
 ### Short Description (max 132 characters)
-> Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with audio and meanings.
+> Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with text-to-speech reading and meanings.
 
 ### Detailed Description
 ```markdown
 Gita Wisdom New Tab
 
-Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring audio recitations, word meanings, and customized themes.
+Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring text-to-speech reading, word meanings, and customizable themes.
 
 Key Features:
-- Daily Shloka: Inspiring Bhagavad Gita verse every time you open a new tab.
-- Multilingual: Shlokas in original Sanskrit with English and Hindi translations.
-- Audio Recitation: Clear and meditative audio playback for authentic pronunciation.
-- Local-first & Private: All preferences and audio cached locally without tracking.
+- Shloka on every new tab: A Bhagavad Gita verse from a curated collection each time you open a new tab.
+- Multilingual: Shlokas in original Sanskrit with English and Hindi translations; other Indian languages are machine-translated on demand via Google Translate.
+- Listen: Verses read aloud with your browser's built-in text-to-speech voices.
+- Private: No tracking or analytics; preferences and bookmarks are stored locally. Fonts load from Google Fonts, and verse text is sent to Google Translate only for languages other than English/Hindi.
 
 How to use:
 1. Open a new tab in Chrome.
 2. Read the daily shloka or browse chapter verses.
-3. Listen to recitation or change themes from settings.
+3. Listen to the verse read aloud or change themes from settings.
 ```
 
 ---
@@ -46,13 +46,14 @@ Google review requires specific plain-English justification for each declared pe
 
 | Permission | Used in Code? | Sample Evidence | Required? | Risk | Plain-English Review Justification |
 | :--- | :---: | :--- | :---: | :---: | :--- |
-| `storage` | Yes | newtab.js:104 | Yes | LOW | Required to locally persist user settings, configurations, and application state across sessions. |
+| `storage` | Yes | newtab.js:104 | Yes | LOW | Stores the user's theme, preferred language, text-to-speech voice settings, bookmarked verses, reading-streak stats and cached machine translations locally in chrome.storage.local. |
 
 ---
 
 ## 4. Privacy & Data Use Disclosure
 
 - **Privacy Policy URL**: `https://ravitejakamalapuram.github.io/gita-wisdom.html`
+- **Network use**: Google Fonts (stylesheet/fonts) and, only when a language other than English/Hindi is selected, the Google Translate endpoint (verse text only). No personal data is sent.
 
 ---
 
