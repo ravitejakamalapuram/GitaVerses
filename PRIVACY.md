@@ -18,7 +18,7 @@ No personal data is uploaded or synced to external servers.
 ## Third-Party Services
 The extension uses no analytics, advertising or tracking services. It does contact two Google services:
 - **Google Fonts** (`fonts.googleapis.com`, `fonts.gstatic.com`): web fonts used to display the new tab page.
-- **Google Translate** (`translate.googleapis.com`): only when you choose a translation language other than English or Hindi, the verse's English translation/commentary text is sent to Google Translate and the result is cached locally. No personal data is included.
+- **Google Translate** (`translate.googleapis.com`): only when you choose a translation language other than English, the verse's English translation text is sent to Google Translate and the result is cached locally. No personal data is included.
 
 Audio reading uses your browser's built-in text-to-speech (Web Speech API).
 

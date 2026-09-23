@@ -1,6 +1,6 @@
 # Chrome Web Store Listing & Publishing Record
 
-*Last Updated: 2026-09-21*
+*Last Updated: 2026-09-23*
 
 ---
 
@@ -8,7 +8,7 @@
 - **Name**: Gita Wisdom New Tab
 - **Extension ID**: `hebmlallhbgfnjjcnilphllknhfoddnk`
 - **Publisher ID**: `9637cb78-fa33-49dd-a4cb-91066ff182e3`
-- **Version**: `1.0.2`
+- **Version**: `1.1.0`
 - **Manifest Version**: `MV3`
 - **Language**: `en`
 - **Category**: `Lifestyle`
@@ -18,24 +18,29 @@
 ## 2. Store Listing Copy
 
 ### Short Description (max 132 characters)
-> Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with text-to-speech reading and meanings.
+> The complete Bhagavad Gita on your new tab: all 701 verses in Sanskrit with transliteration and a public-domain English translation.
 
 ### Detailed Description
 ```markdown
 Gita Wisdom New Tab
 
-Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring text-to-speech reading, word meanings, and customizable themes.
+Gita Wisdom New Tab transforms your browser's new tab page into a tranquil spiritual sanctuary. Start each browsing session with timeless wisdom from the complete Srimad Bhagavad Gita: all 18 chapters and 701 verses, bundled offline.
 
-Key Features:
-- Shloka on every new tab: A Bhagavad Gita verse from a curated collection each time you open a new tab.
-- Multilingual: Shlokas in original Sanskrit with English and Hindi translations; other Indian languages are machine-translated on demand via Google Translate.
-- Listen: Verses read aloud with your browser's built-in text-to-speech voices.
-- Private: No tracking or analytics; preferences and bookmarks are stored locally. Fonts load from Google Fonts, and verse text is sent to Google Translate only for languages other than English/Hindi.
+KEY FEATURES:
+• A Shloka Every New Tab: A verse from the complete Gita, shown in the original Sanskrit (Devanagari) with IAST transliteration.
+• Public-Domain English: Every verse comes with Annie Besant's classic English translation (1922, public domain). Hindi, Telugu, Tamil, Bengali and other Indian languages are machine-translated from the English on demand via Google Translate.
+• Listen: Have the verse read aloud using your browser's built-in text-to-speech voices (voice quality depends on the voices installed on your device).
+• Serene Aesthetics: Ambient visual backgrounds, tranquil starry night sky, and distraction-free themes.
+• Bookmarks & Search: Save favourite verses and search all 701 verses by keyword, chapter title or verse number (e.g. 2.47).
+• Private: No tracking, analytics, or accounts. Preferences and bookmarks are stored only on your computer. Fonts are loaded from Google Fonts, and verse text is sent to Google Translate only when you choose a language other than English.
 
-How to use:
-1. Open a new tab in Chrome.
-2. Read the daily shloka or browse chapter verses.
-3. Listen to the verse read aloud or change themes from settings.
+Sources: Sanskrit text from the gita/gita dataset (Unlicense); English translation by Annie Besant (1922), public domain.
+
+HOW TO USE:
+1. Install Gita Wisdom New Tab and open a new tab in Chrome.
+2. Contemplate the shloka, read its translation, and listen to it read aloud.
+3. Search verses and save favourites to your personal bookmarks.
+4. Enjoy peace, mindfulness, and clarity with every new tab you open.
 ```
 
 ---
@@ -53,7 +58,7 @@ Google review requires specific plain-English justification for each declared pe
 ## 4. Privacy & Data Use Disclosure
 
 - **Privacy Policy URL**: `https://ravitejakamalapuram.github.io/gita-wisdom.html`
-- **Network use**: Google Fonts (stylesheet/fonts) and, only when a language other than English/Hindi is selected, the Google Translate endpoint (verse text only). No personal data is sent.
+- **Network use**: Google Fonts (stylesheet/fonts) and, only when a language other than English is selected, the Google Translate endpoint (verse text only). No personal data is sent.
 
 ---
 
@@ -83,3 +88,4 @@ Google review requires specific plain-English justification for each declared pe
 | :--- | :--- | :--- | :--- | :--- |
 | `1.0.1` | 2026-09-21 | Rejected | `gita-wisdom-new-tab-v1.0.1.zip` | Rejected under Branding Guidelines (cropped promo tile) |
 | `1.0.2` | 2026-09-22 | Draft / Ready | `chrome-store/builds/gita-wisdom-new-tab-v1.0.2.zip` | Added uncropped promo tiles with safe margins, updated privacy URL to GitHub Pages |
+| `1.1.0` | 2026-09-23 | Draft | — | Complete 701-verse Gita from public-domain sources (Sanskrit: gita/gita, Unlicense; English: Annie Besant 1922). Removed Hindi translation, word meanings and commentary of unclear provenance. See CREDITS.md |

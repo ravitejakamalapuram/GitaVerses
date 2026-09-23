@@ -238,6 +238,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .verse-coords {
@@ -257,6 +258,10 @@ body {
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--text-secondary);
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Card Body */
@@ -1242,4 +1247,26 @@ body {
   100% {
     transform: scaleY(1);
   }
+}
+
+/* --- Source attribution (public-domain texts) --- */
+.footer-attribution {
+  margin-top: 6px;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-family: 'Outfit', sans-serif;
+  opacity: 0.75;
+}
+
+.footer-attribution a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.setting-note {
+  margin-top: 8px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
 }

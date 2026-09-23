@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Gita Wisdom New Tab",
-  "version": "1.0.2",
-  "description": "Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with audio and meanings.",
+  "version": "1.1.0",
+  "description": "The complete Bhagavad Gita on your new tab: all 701 verses in Sanskrit with transliteration and public-domain English.",
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
