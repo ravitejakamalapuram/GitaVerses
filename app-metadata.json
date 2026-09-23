@@ -2,7 +2,7 @@
   "appName": "Gita Wisdom New Tab",
   "appType": "chrome-extension",
   "repoName": "GitaVerses",
-  "description": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring text-to-speech reading, word meanings, and customizable themes.",
+  "description": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom: all 701 verses in Sanskrit with transliteration and a public-domain English translation, text-to-speech reading, and customizable themes.",
   "modules": [
     {
       "name": "Chrome Extension",
@@ -15,10 +15,10 @@
       "buildScript": "zip -r initial-package.zip . -x '*.git*' -x '*.zip' -x '*.log' -x '.*'",
       "artifactPath": "initial-package.zip",
       "cwsListing": {
-        "shortDescription": "Transform your new tab with Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi with text-to-speech and meanings.",
-        "detailedDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom. Displays shlokas in Sanskrit, English, and Hindi, featuring text-to-speech reading, word meanings, and customizable themes.",
+        "shortDescription": "The complete Bhagavad Gita on your new tab: all 701 verses in Sanskrit with transliteration and a public-domain English translation.",
+        "detailedDescription": "Transform your new tab into a serene sanctuary of Bhagavad Gita wisdom: all 701 verses in Sanskrit with transliteration and a public-domain English translation, text-to-speech reading, and customizable themes.",
         "category": "lifestyle",
-        "singlePurpose": "Replaces the new tab page with a dashboard that shows Bhagavad Gita shlokas with translations, commentary and text-to-speech reading.",
+        "singlePurpose": "Replaces the new tab page with a dashboard that shows Bhagavad Gita verses in Sanskrit with transliteration, an English translation and text-to-speech reading.",
         "privacyPolicyUrl": "https://ravitejakamalapuram.github.io/gita-wisdom.html",
         "permissionJustifications": {
           "storage": "Stores the user's theme, preferred language, text-to-speech voice settings, bookmarked verses, reading-streak stats and cached machine translations locally in chrome.storage.local so they persist across new tabs and sessions."

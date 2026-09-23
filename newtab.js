@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     lang: 'en',
     theme: 'sunrise',
     showTransliteration: true,
-    defaultExpandMeanings: false,
     voiceSpeed: 1.0,
     voiceType: 'sanskrit-only',
     bookmarks: [],
@@ -37,13 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const elTransliteration = document.getElementById('transliteration-display');
   const elTranslation = document.getElementById('translation-display');
   
-  // Commentary
-  const elBtnToggleCommentary = document.getElementById('btn-toggle-commentary');
-  const elCommentaryChevron = document.getElementById('commentary-chevron');
-  const elCommentaryPanel = document.getElementById('commentary-panel');
-  const elWordMeanings = document.getElementById('word-meanings-display');
-  const elCommentaryText = document.getElementById('commentary-display');
-  
   // Actions
   const elBtnPlayAudio = document.getElementById('btn-play-audio');
   const elPlayIcon = document.getElementById('play-icon');
@@ -68,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const elSelectLangPref = document.getElementById('select-lang-pref');
   const elThemeBtns = document.querySelectorAll('.theme-btn');
   const elCheckTransliteration = document.getElementById('toggle-transliteration');
-  const elCheckExpandMeanings = document.getElementById('toggle-expand-meanings');
   const elSelectVoiceSpeed = document.getElementById('select-voice-speed');
   const elSelectVoiceType = document.getElementById('select-voice-type');
   
@@ -88,17 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const elStreakMotivation = document.getElementById('streak-motivation');
   const elToastContainer = document.getElementById('toast-container');
 
-  // Quotes for footer
-  const FOOTER_QUOTES = [
-    "“Fix your mind on Me, be devoted to Me, worship Me, and offer your respects unto Me.” — Gita 18.65",
-    "“Set thy heart upon thy work, but never on its reward.” — Gita 2.47",
-    "“The mind is restless, Krishna, and hard to hold. But it can be trained.” — Gita 6.35",
-    "“A man is made by his belief. As he believes, so he is.” — Gita 17.3",
-    "“Calmness, gentleness, silence, self-restraint, and purity: these are the disciplines of the mind.” — Gita 17.16",
-    "“For him who has conquered the mind, the mind is the best of friends.” — Gita 6.6",
-    "“When meditation is mastered, the mind is as unwavering as the flame of a candle in a windless place.” — Gita 6.19",
-    "“Yoga is the journey of the self, through the self, to the self.” — Gita 6.20"
-  ];
+  // Footer quotes: short verses from the bundled public-domain English translation (Annie Besant, 1922)
+  const FOOTER_QUOTE_REFS = [[2, 47], [2, 14], [3, 35], [4, 8], [5, 18], [6, 35], [9, 26], [2, 23], [18, 66]];
 
   // --- Environment & Storage Helpers ---
   const isExtensionEnv = typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
@@ -200,66 +182,49 @@ document.addEventListener('DOMContentLoaded', () => {
     return translated || text;
   }
 
+  // English is bundled (public-domain translation). Any other language is a
+  // machine translation of that English text, fetched on demand and cached.
   async function getTranslation(verseObj, targetLang) {
-    if (targetLang === 'en') {
-      return {
-        translation: verseObj.translation.en,
-        commentary: verseObj.commentary.en
-      };
+    const english = verseObj.translation.en;
+    if (!targetLang || targetLang === 'en') {
+      return { translation: english, machine: false };
     }
-    if (targetLang === 'hi') {
-      return {
-        translation: verseObj.translation.hi,
-        commentary: verseObj.commentary.hi
-      };
-    }
-    
-    const cacheKey = `trans_${verseObj.chapter}_${verseObj.verse}_${targetLang}`;
+
+    // v2 key: older cache entries were translated from the previous (removed) Hindi text
+    const cacheKey = `trans2_${verseObj.chapter}_${verseObj.verse}_${targetLang}`;
     const cached = await getStorageData(cacheKey);
     if (cached && cached[cacheKey]) {
-      return cached[cacheKey];
+      return { translation: cached[cacheKey], machine: true };
     }
-    
+
+    let translated = null;
+
     // Try Chrome Built-in Translator API if supported
     if ('Translator' in self) {
       try {
-        const options = { sourceLanguage: 'hi', targetLanguage: targetLang };
+        const options = { sourceLanguage: 'en', targetLanguage: targetLang };
         const availability = await Translator.availability(options);
         if (availability === 'available') {
           const translator = await Translator.create(options);
-          const translatedText = await translator.translate(verseObj.translation.hi);
-          const translatedComm = await translator.translate(verseObj.commentary.hi);
-          
-          const result = {
-            translation: translatedText,
-            commentary: translatedComm
-          };
-          await setStorageData({ [cacheKey]: result });
-          return result;
+          translated = await translator.translate(english);
         }
       } catch (err) {
         console.warn('Chrome Translator API failed, falling back to public API:', err);
       }
     }
-    
+
     // Fallback: Free Google Translate API
-    try {
-      const translatedText = await fetchGoogleTranslate(verseObj.translation.hi, 'hi', targetLang);
-      const translatedComm = await fetchGoogleTranslate(verseObj.commentary.hi, 'hi', targetLang);
-      
-      const result = {
-        translation: translatedText,
-        commentary: translatedComm
-      };
-      await setStorageData({ [cacheKey]: result });
-      return result;
-    } catch (err) {
-      console.error('Translation fallback failed:', err);
-      return {
-        translation: verseObj.translation.en,
-        commentary: verseObj.commentary.en
-      };
+    if (!translated) {
+      try {
+        translated = await fetchGoogleTranslate(english, 'en', targetLang);
+      } catch (err) {
+        console.warn('Translation fallback failed, showing English:', err);
+        return { translation: english, machine: false };
+      }
     }
+
+    await setStorageData({ [cacheKey]: translated });
+    return { translation: translated, machine: true };
   }
 
   // --- Toast Notification ---
@@ -386,39 +351,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate contents
     elVerseCoords.textContent = `Chapter ${verseObj.chapter}, Verse ${verseObj.verse}`;
     elVerseTheme.textContent = verseObj.theme;
+    elVerseTheme.title = `Chapter ${verseObj.chapter}: ${verseObj.theme}`;
     elSanskrit.textContent = verseObj.sanskrit;
     elTransliteration.textContent = verseObj.transliteration;
     
-    // Check preferred language for translation & explanation (async translation fetch)
-    elTranslation.textContent = "Translating...";
-    elCommentaryText.textContent = "Translating explanation...";
-    
-    try {
-      const transResult = await getTranslation(verseObj, settings.lang);
-      elTranslation.textContent = transResult.translation;
-      elCommentaryText.textContent = transResult.commentary;
-    } catch (err) {
-      console.error('Translation rendering failed:', err);
-      elTranslation.textContent = verseObj.translation.en;
-      elCommentaryText.textContent = verseObj.commentary.en;
+    // Show the bundled English immediately; swap in a machine translation if another language is chosen
+    elTranslation.textContent = verseObj.translation.en;
+    elTranslation.removeAttribute('title');
+    if (settings.lang !== 'en') {
+      try {
+        const transResult = await getTranslation(verseObj, settings.lang);
+        if (currentVerse === verseObj) {
+          elTranslation.textContent = transResult.translation;
+          if (transResult.machine) {
+            elTranslation.title = 'Machine translation of the English text';
+          }
+        }
+      } catch (err) {
+        console.error('Translation rendering failed:', err);
+      }
     }
-    
-    elWordMeanings.textContent = verseObj.wordMeanings;
 
     // Manage Transliteration Display
     if (settings.showTransliteration) {
       elTransliteration.classList.remove('hidden');
     } else {
       elTransliteration.classList.add('hidden');
-    }
-
-    // Manage Commentary Expanded State
-    if (settings.defaultExpandMeanings) {
-      elCommentaryPanel.classList.add('expanded');
-      elCommentaryChevron.classList.add('rotate');
-    } else {
-      elCommentaryPanel.classList.remove('expanded');
-      elCommentaryChevron.classList.remove('rotate');
     }
 
     // Sync Bookmark Icon
@@ -446,12 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const randomIndex = Math.floor(Math.random() * GITA_VERSES.length);
     renderShloka(GITA_VERSES[randomIndex]);
   }
-
-  // Commentary Collapse Toggle
-  elBtnToggleCommentary.addEventListener('click', () => {
-    const isExpanded = elCommentaryPanel.classList.toggle('expanded');
-    elCommentaryChevron.classList.toggle('rotate', isExpanded);
-  });
 
   // --- Bookmarking System ---
   function toggleBookmark() {
@@ -504,12 +456,9 @@ document.addEventListener('DOMContentLoaded', () => {
       textToCopy += `Transliteration:\n${currentVerse.transliteration}\n\n`;
     }
 
-    if (settings.lang === 'hi') {
-      textToCopy += `Hindi Translation:\n${currentVerse.translation.hi}\n\n`;
-      textToCopy += `Meaning/Explanation:\n${currentVerse.commentary.hi}\n`;
-    } else {
-      textToCopy += `English Translation:\n${currentVerse.translation.en}\n\n`;
-      textToCopy += `Meaning/Explanation:\n${currentVerse.commentary.en}\n`;
+    textToCopy += `English Translation (Annie Besant, 1922):\n${currentVerse.translation.en}\n`;
+    if (settings.lang !== 'en' && elTranslation.textContent && elTranslation.textContent !== currentVerse.translation.en) {
+      textToCopy += `\nMachine translation (${settings.lang}):\n${elTranslation.textContent}\n`;
     }
 
     try {
@@ -640,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elIndexContainer.innerHTML = '';
     
     const filtered = GITA_VERSES.filter(v => {
-      const matchQuery = `${v.chapter} ${v.verse} ${v.theme} ${v.sanskrit} ${v.translation.en} ${v.translation.hi}`.toLowerCase();
+      const matchQuery = `${v.chapter}.${v.verse} ${v.theme} ${v.sanskrit} ${v.transliteration} ${v.translation.en}`.toLowerCase();
       return matchQuery.includes(searchVal);
     });
 
@@ -657,8 +606,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = document.createElement('div');
       card.className = 'index-item-card';
       
-      const snippet = settings.lang === 'hi' ? v.translation.hi : v.translation.en;
-      
+      const snippet = v.translation.en;
+
       card.innerHTML = `
         <div class="item-main-details">
           <div class="item-meta">
@@ -702,9 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
     settings.bookmarks.forEach((bm) => {
       // Find full verse object from database to retrieve correct translation snippet
       const fullVerse = GITA_VERSES.find(v => v.chapter === bm.chapter && v.verse === bm.verse);
-      const snippet = fullVerse 
-        ? (settings.lang === 'hi' ? fullVerse.translation.hi : fullVerse.translation.en)
-        : bm.sanskrit;
+      const snippet = fullVerse ? fullVerse.translation.en : bm.sanskrit;
 
       const card = document.createElement('div');
       card.className = 'index-item-card';
@@ -834,14 +781,13 @@ document.addEventListener('DOMContentLoaded', () => {
   async function initSettings() {
     // 1. Fetch values from storage
     const stored = await getStorageData([
-      'lang', 'theme', 'showTransliteration', 'defaultExpandMeanings', 'voiceSpeed', 'voiceType', 'bookmarks', 'stats'
+      'lang', 'theme', 'showTransliteration', 'voiceSpeed', 'voiceType', 'bookmarks', 'stats'
     ]);
 
     // Apply retrieved settings (fall back to defaults if not found)
     if (stored.lang) settings.lang = stored.lang;
     if (stored.theme) settings.theme = stored.theme;
     if (stored.showTransliteration !== undefined) settings.showTransliteration = stored.showTransliteration;
-    if (stored.defaultExpandMeanings !== undefined) settings.defaultExpandMeanings = stored.defaultExpandMeanings;
     if (stored.voiceSpeed) settings.voiceSpeed = stored.voiceSpeed;
     if (stored.voiceType) settings.voiceType = stored.voiceType;
     if (stored.bookmarks) settings.bookmarks = stored.bookmarks;
@@ -849,12 +795,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Reflect settings in DOM controls
     
-    // Language select dropdown
+    // Language select dropdown (fall back to English if a stored value is no longer offered)
     elSelectLangPref.value = settings.lang;
+    if (elSelectLangPref.value !== settings.lang) {
+      settings.lang = 'en';
+      elSelectLangPref.value = 'en';
+    }
 
     // Checkbox toggles
     elCheckTransliteration.checked = settings.showTransliteration;
-    elCheckExpandMeanings.checked = settings.defaultExpandMeanings;
 
     // Select boxes
     elSelectVoiceSpeed.value = settings.voiceSpeed;
@@ -869,9 +818,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Load Shloka (from storage or pick a random one)
     loadRandomVerse();
     
-    // Load footer quote
-    const randomQuoteIdx = Math.floor(Math.random() * FOOTER_QUOTES.length);
-    elFooterQuote.textContent = FOOTER_QUOTES[randomQuoteIdx];
+    // Load footer quote from the bundled translation
+    const [qc, qv] = FOOTER_QUOTE_REFS[Math.floor(Math.random() * FOOTER_QUOTE_REFS.length)];
+    const quoteVerse = GITA_VERSES.find(v => v.chapter === qc && v.verse === qv);
+    if (quoteVerse) {
+      elFooterQuote.textContent = `“${quoteVerse.translation.en}” — Gita ${qc}.${qv}`;
+    }
   }
 
   // --- Add Event Listeners for settings changes ---
@@ -906,12 +858,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentVerse) {
       renderShloka(currentVerse);
     }
-  });
-
-  // Expand Meanings Toggle
-  elCheckExpandMeanings.addEventListener('change', (e) => {
-    settings.defaultExpandMeanings = e.target.checked;
-    setStorageData({ defaultExpandMeanings: settings.defaultExpandMeanings });
   });
 
   // Voice Speed Change

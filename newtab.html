@@ -73,28 +73,6 @@
           <div id="translation-display" class="translation-text select-all">
             Loading translation...
           </div>
-
-          <!-- Collapsible Commentary Button -->
-          <button id="btn-toggle-commentary" class="btn-text-link">
-            <span>View Word Meanings & Explanation</span>
-            <svg class="chevron-icon" id="commentary-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
-
-          <!-- Collapsible Commentary Section -->
-          <div id="commentary-panel" class="commentary-panel collapsed">
-            <div class="commentary-scroll-area">
-              <div class="word-meanings-section">
-                <h3>Word Meanings</h3>
-                <p id="word-meanings-display" class="word-meanings-text">Loading word meanings...</p>
-              </div>
-              <div class="explanation-section">
-                <h3>Explanation</h3>
-                <p id="commentary-display" class="explanation-text">Loading explanation...</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- Action Controls Bar -->
@@ -154,7 +132,11 @@
 
     <!-- Footer Quote -->
     <footer class="app-footer">
-      <p id="footer-daily-quote">“Fix your mind on Me, be devoted to Me...”</p>
+      <p id="footer-daily-quote"></p>
+      <p class="footer-attribution">
+        English: Annie Besant (1922), public domain · Sanskrit: <a href="https://github.com/gita/gita" target="_blank" rel="noopener noreferrer">gita/gita</a> (Unlicense) ·
+        <a href="https://github.com/ravitejakamalapuram/GitaVerses/blob/main/CREDITS.md" target="_blank" rel="noopener noreferrer">Credits</a>
+      </p>
     </footer>
 
   </div>
@@ -184,10 +166,10 @@
       <!-- TAB 1: Settings -->
       <section id="tab-settings" class="tab-panel active">
         <div class="settings-group">
-          <h3>Preferred Translation Language</h3>
+          <h3>Translation Language</h3>
           <div class="setting-row">
             <select id="select-lang-pref" class="custom-select" style="width: 100%;">
-              <option value="en" selected>English</option>
+              <option value="en" selected>English (Annie Besant, 1922)</option>
               <option value="hi">हिन्दी (Hindi) - North/Central</option>
               <option value="bn">বাংলা (Bengali) - West Bengal, Tripura</option>
               <option value="mr">मराठी (Marathi) - Maharashtra</option>
@@ -201,6 +183,7 @@
               <option value="as">অসমীয়া (Assamese) - Assam</option>
             </select>
           </div>
+          <p class="setting-note">Languages other than English are machine-translated from the English text on demand (via Google Translate) and cached on your device.</p>
         </div>
 
         <div class="settings-group">
@@ -226,11 +209,6 @@
           <label class="switch-label">
             <span class="switch-text">Show Transliteration</span>
             <input type="checkbox" id="toggle-transliteration" checked>
-            <span class="custom-switch"></span>
-          </label>
-          <label class="switch-label">
-            <span class="switch-text">Default Expand Meaning</span>
-            <input type="checkbox" id="toggle-expand-meanings">
             <span class="custom-switch"></span>
           </label>
         </div>
@@ -261,7 +239,7 @@
       <!-- TAB 2: All Verses Index -->
       <section id="tab-index" class="tab-panel">
         <div class="search-box-container">
-          <input type="text" id="search-input" placeholder="Search by keyword or theme..." class="search-input">
+          <input type="text" id="search-input" placeholder="Search 701 verses: keyword, 2.47, chapter title..." class="search-input">
           <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
