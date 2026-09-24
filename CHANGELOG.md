@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-09-25
+
+### Fixed
+- Removed the unofficial `translate.googleapis.com/translate_a/single` ("gtx") fallback used for
+  machine translation. This undocumented endpoint is not sanctioned for third-party production use
+  and is the most likely cause of the "did not comply with our Programme policies" Chrome Web Store
+  rejection of 1.1.0. Machine translation now relies solely on Chrome's on-device built-in Translator
+  API; if it isn't available (unsupported Chrome version or missing language pack), the bundled
+  public-domain English translation is shown instead. No verse text is sent to any server for
+  translation.
+- Updated the privacy policy (`PRIVACY.md`, `privacy.html`), store listing copy, `CREDITS.md` and
+  `app-metadata.json` to reflect the on-device-only translation path.
+
 ## [1.1.0] - 2026-09-23
 
 ### Added

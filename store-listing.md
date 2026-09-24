@@ -11,11 +11,11 @@ Gita Wisdom New Tab transforms your browser's new tab page into a tranquil spiri
 
 KEY FEATURES:
 • A Shloka Every New Tab: A verse from the complete Gita, shown in the original Sanskrit (Devanagari) with IAST transliteration.
-• Public-Domain English: Every verse comes with Annie Besant's classic English translation (1922, public domain). Hindi, Telugu, Tamil, Bengali and other Indian languages are machine-translated from the English on demand via Google Translate.
+• Public-Domain English: Every verse comes with Annie Besant's classic English translation (1922, public domain). Hindi, Telugu, Tamil, Bengali and other Indian languages are machine-translated from the English on demand, entirely on your device, using Chrome's built-in Translator.
 • Listen: Have the verse read aloud using your browser's built-in text-to-speech voices (voice quality depends on the voices installed on your device).
 • Serene Aesthetics: Ambient visual backgrounds, tranquil starry night sky, and distraction-free themes.
 • Bookmarks & Search: Save favourite verses and search all 701 verses by keyword, chapter title or verse number (e.g. 2.47).
-• Private: No tracking, analytics, or accounts. Preferences and bookmarks are stored only on your computer. Fonts are loaded from Google Fonts, and verse text is sent to Google Translate only when you choose a language other than English.
+• Private: No tracking, analytics, or accounts. Preferences and bookmarks are stored only on your computer. Fonts are loaded from Google Fonts; translation happens on-device and no verse text is ever sent to a translation server.
 
 Sources: Sanskrit text from the gita/gita dataset (Unlicense); English translation by Annie Besant (1922), public domain.
 
