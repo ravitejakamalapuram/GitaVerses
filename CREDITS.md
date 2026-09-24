@@ -40,8 +40,10 @@ verse counts match the Sanskrit exactly (47, 72, 43, 42, 29, 47, 30, 28, 34, 42,
 
 ## Machine translations
 
-Languages other than English are machine-translated from Besant's English text on demand, through
-Chrome's built-in Translator API or Google Translate, and cached locally. They are not bundled.
+Languages other than English are machine-translated from Besant's English text on demand, entirely
+on-device through Chrome's built-in Translator API, and cached locally. They are not bundled. If the
+on-device Translator isn't available (unsupported Chrome version, missing language pack), the bundled
+English text is shown instead — no verse text is ever sent to a remote translation server.
 
 ## Rebuilding
 

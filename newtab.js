@@ -167,23 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return langVoices[0];
   }
 
-  async function fetchGoogleTranslate(text, sourceLang, targetLang) {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Fetch failed');
-    const data = await res.json();
-    
-    let translated = '';
-    if (data && data[0]) {
-      data[0].forEach(sentence => {
-        if (sentence[0]) translated += sentence[0];
-      });
-    }
-    return translated || text;
-  }
-
   // English is bundled (public-domain translation). Any other language is a
-  // machine translation of that English text, fetched on demand and cached.
+  // machine translation of that English text via Chrome's on-device Translator
+  // API, fetched on demand and cached. No text ever leaves the device: if the
+  // on-device model isn't available, the bundled English is shown instead.
   async function getTranslation(verseObj, targetLang) {
     const english = verseObj.translation.en;
     if (!targetLang || targetLang === 'en') {
@@ -199,7 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let translated = null;
 
-    // Try Chrome Built-in Translator API if supported
+    // Chrome's on-device Translator API is the only translation path: it runs
+    // entirely locally, so no verse text is ever sent to a remote server.
     if ('Translator' in self) {
       try {
         const options = { sourceLanguage: 'en', targetLanguage: targetLang };
@@ -209,18 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
           translated = await translator.translate(english);
         }
       } catch (err) {
-        console.warn('Chrome Translator API failed, falling back to public API:', err);
+        console.warn('Chrome Translator API failed, showing English:', err);
       }
     }
 
-    // Fallback: Free Google Translate API
     if (!translated) {
-      try {
-        translated = await fetchGoogleTranslate(english, 'en', targetLang);
-      } catch (err) {
-        console.warn('Translation fallback failed, showing English:', err);
-        return { translation: english, machine: false };
-      }
+      return { translation: english, machine: false };
     }
 
     await setStorageData({ [cacheKey]: translated });

@@ -1,6 +1,6 @@
 # Chrome Web Store Listing & Publishing Record
 
-*Last Updated: 2026-09-23*
+*Last Updated: 2026-09-25*
 
 ---
 
@@ -8,7 +8,7 @@
 - **Name**: Gita Wisdom New Tab
 - **Extension ID**: `hebmlallhbgfnjjcnilphllknhfoddnk`
 - **Publisher ID**: `9637cb78-fa33-49dd-a4cb-91066ff182e3`
-- **Version**: `1.1.0`
+- **Version**: `1.1.1`
 - **Manifest Version**: `MV3`
 - **Language**: `en`
 - **Category**: `Lifestyle`
@@ -28,11 +28,11 @@ Gita Wisdom New Tab transforms your browser's new tab page into a tranquil spiri
 
 KEY FEATURES:
 • A Shloka Every New Tab: A verse from the complete Gita, shown in the original Sanskrit (Devanagari) with IAST transliteration.
-• Public-Domain English: Every verse comes with Annie Besant's classic English translation (1922, public domain). Hindi, Telugu, Tamil, Bengali and other Indian languages are machine-translated from the English on demand via Google Translate.
+• Public-Domain English: Every verse comes with Annie Besant's classic English translation (1922, public domain). Hindi, Telugu, Tamil, Bengali and other Indian languages are machine-translated from the English on demand, entirely on your device, using Chrome's built-in Translator.
 • Listen: Have the verse read aloud using your browser's built-in text-to-speech voices (voice quality depends on the voices installed on your device).
 • Serene Aesthetics: Ambient visual backgrounds, tranquil starry night sky, and distraction-free themes.
 • Bookmarks & Search: Save favourite verses and search all 701 verses by keyword, chapter title or verse number (e.g. 2.47).
-• Private: No tracking, analytics, or accounts. Preferences and bookmarks are stored only on your computer. Fonts are loaded from Google Fonts, and verse text is sent to Google Translate only when you choose a language other than English.
+• Private: No tracking, analytics, or accounts. Preferences and bookmarks are stored only on your computer. Fonts are loaded from Google Fonts; translation happens on-device and no verse text is ever sent to a translation server.
 
 Sources: Sanskrit text from the gita/gita dataset (Unlicense); English translation by Annie Besant (1922), public domain.
 
@@ -58,7 +58,7 @@ Google review requires specific plain-English justification for each declared pe
 ## 4. Privacy & Data Use Disclosure
 
 - **Privacy Policy URL**: `https://ravitejakamalapuram.github.io/gita-wisdom.html`
-- **Network use**: Google Fonts (stylesheet/fonts) and, only when a language other than English is selected, the Google Translate endpoint (verse text only). No personal data is sent.
+- **Network use**: Google Fonts (stylesheet/fonts) only. Translation to languages other than English runs entirely on-device via Chrome's built-in Translator API; no verse text is sent to any server for translation.
 
 ---
 
@@ -88,4 +88,5 @@ Google review requires specific plain-English justification for each declared pe
 | :--- | :--- | :--- | :--- | :--- |
 | `1.0.1` | 2026-09-21 | Rejected | `gita-wisdom-new-tab-v1.0.1.zip` | Rejected under Branding Guidelines (cropped promo tile) |
 | `1.0.2` | 2026-09-22 | Draft / Ready | `chrome-store/builds/gita-wisdom-new-tab-v1.0.2.zip` | Added uncropped promo tiles with safe margins, updated privacy URL to GitHub Pages |
-| `1.1.0` | 2026-09-23 | Draft | — | Complete 701-verse Gita from public-domain sources (Sanskrit: gita/gita, Unlicense; English: Annie Besant 1922). Removed Hindi translation, word meanings and commentary of unclear provenance. See CREDITS.md |
+| `1.1.0` | 2026-09-23 | Rejected | — | Complete 701-verse Gita from public-domain sources (Sanskrit: gita/gita, Unlicense; English: Annie Besant 1922). Removed Hindi translation, word meanings and commentary of unclear provenance. See CREDITS.md. Rejected by CWS review: "did not comply with our Programme policies" (no specific reason given). |
+| `1.1.1` | 2026-09-25 | Draft / Ready | — | Root cause: on-demand fallback used the unofficial `translate.googleapis.com/translate_a/single` ("gtx") endpoint, which is not sanctioned for third-party production use under Google's API Terms of Service. Removed it; machine translation now uses Chrome's on-device Translator API only, falling back to bundled English. Privacy policy, listing copy and CREDITS.md updated to match. See POR-77. |

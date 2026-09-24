@@ -1,6 +1,6 @@
 # Privacy Policy for Gita Wisdom New Tab
 
-Last updated: 2026-05-30
+Last updated: 2026-09-25
 
 ## Overview
 We take your privacy seriously. This extension is designed to operate securely and keep your data safe.
@@ -16,9 +16,10 @@ All data is stored locally on the device using standard API methods:
 No personal data is uploaded or synced to external servers.
 
 ## Third-Party Services
-The extension uses no analytics, advertising or tracking services. It does contact two Google services:
+The extension uses no analytics, advertising or tracking services. It contacts one Google service:
 - **Google Fonts** (`fonts.googleapis.com`, `fonts.gstatic.com`): web fonts used to display the new tab page.
-- **Google Translate** (`translate.googleapis.com`): only when you choose a translation language other than English, the verse's English translation text is sent to Google Translate and the result is cached locally. No personal data is included.
+
+Languages other than English are machine-translated using Chrome's built-in, on-device Translator API and the result is cached locally. This translation runs entirely on your device; no verse text is sent to any server for translation.
 
 Audio reading uses your browser's built-in text-to-speech (Web Speech API).
 

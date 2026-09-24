@@ -26,7 +26,7 @@
         "language": "en",
         "testInstructions": "",
         "remoteCodeUsed": false,
-        "remoteCodeJustification": "The extension does not use remote code. All JavaScript is packaged in the extension; it only loads Google Fonts stylesheets and fetches JSON translation data from the Google Translate endpoint, neither of which is executed as code.",
+        "remoteCodeJustification": "The extension does not use remote code. All JavaScript is packaged in the extension. It only loads Google Fonts stylesheets over the network; translation to non-English languages runs entirely on-device via Chrome's built-in Translator API and involves no network request.",
         "dataUsageCertified": true
       }
     }
