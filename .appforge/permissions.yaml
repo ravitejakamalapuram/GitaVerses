@@ -1,0 +1,7 @@
+schema: appforge/permissions@1
+permissions:
+  - permission: storage
+    required: true
+    reason: "Persist theme, preferred language, TTS voice settings, bookmarked verses, reading-streak stats, and cached machine translations"
+    data_access: [user_settings_local]
+    security_impact: low

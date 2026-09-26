@@ -1,0 +1,38 @@
+# Backfilled by the AppForge factory (P1-07). Fields marked null are not yet knowable —
+# they depend on infrastructure (appforge-control, appforge-edge, Paperclip) not built yet.
+product_id: gitaverses
+name: "Gita Wisdom New Tab"
+description: "The complete Bhagavad Gita on your new tab: all 701 verses in Sanskrit with transliteration and public-domain English."
+platform: [chrome]
+state: PRODUCTION
+portfolio_state: NEW # waiting for a free Chrome Web Store publication slot per the 2-slot default (§13.6)
+repository: ravitejakamalapuram/GitaVerses
+owner: founder
+team: []
+architecture: null
+analytics_project: null
+store_ids:
+  cws: hebmlallhbgfnjjcnilphllknhfoddnk
+monetization:
+  model: free
+permissions: .appforge/permissions.yaml
+data_collection:
+  collected: []
+  stored:
+    local: [chrome_storage_local_theme_language_bookmarks_streak_cached_translations]
+    remote: []
+  transmitted:
+    endpoints:
+      - "https://translate.googleapis.com" # only when the user selects a non-English language; verse text only, no personal data, cached locally after
+      - "https://fonts.googleapis.com"
+      - "https://fonts.gstatic.com"
+  sensitive: []
+  third_party: [google_translate_optional, google_fonts]
+  retention: { local: indefinite_until_user_clears, remote: none }
+  deletion: "Uninstall clears all local storage"
+security_classification: low
+release_channel: default
+current_version: "1.1.0"
+kill_policy: null
+scale_policy: null
+slot: waiting_for_free_cws_slot # see §13.6; also blocked behind TeluguPanchangam and TelePort Cast for the same slot
