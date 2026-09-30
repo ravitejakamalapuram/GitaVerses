@@ -12,8 +12,9 @@ portfolio_state: NEW # waiting for a free Chrome Web Store publication slot per 
 # internal_track, unpublished] gates whether the clock runs at all.
 # Never published — awaiting a free CWS publication slot (§13.6);
 # see `slot: waiting_for_free_cws_slot` below.
-# CORRECTED 2026-09-30 (the earlier value was inferred from repo files and was wrong): CWS dashboard 2026-09-30: 'Gita Wisdom New Tab' v1.3.0 is Published - public (2 users). The dashboard does not show first_published.
-store_item_status: published
+# CORRECTED 2026-10-01 against the live CWS dashboard: 'Gita Wisdom New Tab' v1.3.0 is now Draft (unpublished by the founder to free
+# a slot on the 5/5 limit; it had 2 users). Not live, so no day-N clock runs.
+store_item_status: unpublished
 # Correctly null: the item has never been published.
 first_published: null
 repository: ravitejakamalapuram/GitaVerses
