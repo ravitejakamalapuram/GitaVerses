@@ -13,7 +13,9 @@ portfolio_state: NEW # waiting for a free Chrome Web Store publication slot per 
 # Never published — awaiting a free CWS publication slot (§13.6);
 # see `slot: waiting_for_free_cws_slot` below.
 # CORRECTED 2026-09-30 (the earlier value was inferred from repo files and was wrong): CWS dashboard 2026-09-30: 'Gita Wisdom New Tab' v1.3.0 is Published - public (2 users). The dashboard does not show first_published.
-store_item_status: published
+# 2026-09-30: UNPUBLISHED from the Chrome Web Store (dashboard now shows Draft) to free a slot under the
+# 5-item limit. Its content moved into TeluguPanchangam as the daily Gita verse card. Repo kept intact.
+store_item_status: unpublished
 # Correctly null: the item has never been published.
 first_published: null
 repository: ravitejakamalapuram/GitaVerses
